@@ -6,13 +6,13 @@ function Post({ userName, caption, imageUrl }) {
     return (
         <div className="post">
             <div className="post-header">
-            <Avatar className="post-avatar" alt="srosiex" src="/static/images/avatar1.jpg" />
+            <Avatar className="post-avatar" alt={userName} src="/static/images/avatar1.jpg" />
             <h3>{userName}</h3>
             </div>
 
-            <img className="post-image" src="https://m.hindustantimes.com/rf/image_size_960x540/HT/p2/2018/05/16/Pictures/_1571873a-58de-11e8-b431-73159b4b09e2.jpg"/>
+            <img className="post-image" src={imageUrl} />
        
-            <h4 className="post-text"><strong>srosiex:</strong> Cute puppy</h4>
+            <h4 className="post-text"><strong>{userName}:</strong> {caption}</h4>
         </div>
     )
 }
