@@ -62,6 +62,8 @@ function App() {
     })
   }, [])
 
+
+
   return (
 
     
@@ -74,7 +76,6 @@ function App() {
         <div style={modalStyle} className={classes.paper}>
           <h2>I am a modal.</h2>
 
-      <Modal />
     </div>
       </Modal>
 
@@ -83,7 +84,7 @@ function App() {
         <img className="app__headerImage" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo-2x.png/1b47f9d0e595.png" alt="header" />
       </div>
 
-      <Button>Sign Up</Button>
+      <Button onClick={() => setOpen(true)}>Sign Up</Button>
 
       {
         posts.map(({id, post}) => (
