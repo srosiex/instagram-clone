@@ -26,7 +26,12 @@ function App() {
   //runs everytime the variable changes
   useEffect(() => {
     //this is where the code runs
-    db.collection('posts').onSnapshot(snapshot)
+    db.collection('posts').onSnapshot(snapshot => {
+      setPosts(snapshot.docs.map(doc => ({
+        id: doc.id,
+        post: doc.data()
+      })))
+    })
   }, [])
 
   return (
@@ -36,8 +41,8 @@ function App() {
       </div>
 
       {
-        posts.map(post => (
-          <Post userName={post.userName} caption={post.caption} imageUrl={post.imageUrl} />
+        posts.map(({id, post}) => (
+          <Post key={id} userName={post.userName} caption={post.caption} imageUrl={post.imageUrl} />
         ))
       }
 
