@@ -40,12 +40,12 @@ function App() {
 
   ])
   const [email, setEmail] = useState('')
-  const [username, setUserName] = useState('')
+  const [userName, setUserName] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
   useEffect(() => {
-    auth.onAuthStateChanged((authUser) => {
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         //user has logged in ..
         console.log(authUser)
@@ -55,7 +55,12 @@ function App() {
         setUser(null)
       }
     })
-  }, []);
+
+    return () => {
+      // perform some cleanup actions
+      unsubscribe();
+    }
+  }, [user, userName]);
 
   //useEffect runs a piece of code based ona specific condition
   //runs everytime the variable changes
@@ -69,9 +74,14 @@ function App() {
     })
   }, [])
 
+
     const signUp = (event) => {
       event.preventDefault()
-      auth.createUserWithEmailAndPassword(email, password).catch((error)=> alert(error.message))
+      auth.createUserWithEmailAndPassword(email, password).then((authUser) => {
+        authUser.user.updateProfile({
+          displayName: userName
+        })
+      }).catch((error)=> alert(error.message))
     }
 
 
@@ -90,9 +100,9 @@ function App() {
               <img className="app__headerImage" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo-2x.png/1b47f9d0e595.png" alt="header" />
           </center>
                 <Input
-                  placeholder="username"
+                  placeholder="userName"
                   type="text"
-                  value={username}
+                  value={userName}
                   onChange={(e) => setUserName(e.target.value)}
                 />
               
