@@ -68,7 +68,7 @@ function App() {
   //runs everytime the variable changes
   useEffect(() => {
     //this is where the code runs
-    db.collection('posts').onSnapshot(snapshot => {
+    db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
       setPosts(snapshot.docs.map(doc => ({
         id: doc.id,
         post: doc.data()
@@ -99,7 +99,13 @@ function App() {
   return (
     
     <div className="app">
-      <ImageUpload />
+
+      { user?.displayName ? (
+         <ImageUpload userName={user.displayName} />
+
+      ): (
+        <h3>Please login to upload</h3>
+      )}
 
     <Modal
         open={open}
