@@ -5,6 +5,7 @@ import { db, auth } from './firebase';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal'
 import { Button, Input } from '@material-ui/core'
+import ImageUpload from './ImageUpload';
 
 function getModalStyle() {
   const top = 50;
@@ -83,18 +84,22 @@ function App() {
           displayName: userName
         })
       }).catch((error)=> alert(error.message))
+
+      setOpen(false)
     }
 
     const signIn = (event) => {
       event.preventDefault()
-      
+      auth.signInWithEmailAndPassword(email, password).catch((error) => alert(error.message))
+    
+      setOpenSignIn(false)
     }
 
 
   return (
-
     
     <div className="app">
+      <ImageUpload />
 
     <Modal
         open={open}
@@ -106,7 +111,7 @@ function App() {
               <img className="app__headerImage" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo-2x.png/1b47f9d0e595.png" alt="header" />
           </center>
                 <Input
-                  placeholder="userName"
+                  placeholder="username"
                   type="text"
                   value={userName}
                   onChange={(e) => setUserName(e.target.value)}
