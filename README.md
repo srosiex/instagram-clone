@@ -1,5 +1,11 @@
 # Instagram Clone App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![gif](https://media.giphy.com/media/t2MCgtHkCCSYM5EzdT/giphy.gif)
 
-![gif](http://g.recordit.co/O2sbswwRI4.gif)
+* React frontend
+* Utilized Firebase for backend
+* Tutorial by [Clever Programmer](https://www.youtube.com/watch?v=f7T48W0cwXM&list=PLIxNshtketJaz47BbeMNuMDtr8_r4JFcA&index=7&t=231s)
+
+### Try it live [*HERE*](https://ig-clone-cde8b.web.app/)
+#### username: testuser
+#### password: testuser1
