@@ -2,22 +2,33 @@ import React, { useState, useEffect } from 'react';
 import './Post.css';
 import Avatar from '@material-ui/core/Avatar';
 import { db } from './firebase'
+import firebase from 'firebase'
 
-function Post({ userName, caption, imageUrl, postId }) {
+function Post({ user, userName, caption, imageUrl, postId }) {
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState('');
 
     useEffect(() => {
         let unsubscribe;
         if (postId) {
-            unsubscribe = db.collection("posts").doc(postId).collection("comments").onSnapshot((snapshot) => {
+            unsubscribe = db.collection("posts").doc(postId).collection("comments").orderBy('timestamp', 'desc').onSnapshot((snapshot) => {
                 setComments(snapshot.docs.map((doc) => doc.data()))
             })
         }
-    })
+        return () => {
+            unsubscribe();
+        };
+    }, [postId])
 
-    const postComment = (e) => {
-        e.preventDefault();
+    const postComment = (event) => {
+        event.preventDefault();
+
+        db.collection("posts").doc(postId).collection("comments").add({
+            text: comment,
+            username: user.displayName,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        })
+        setComment('');
     }
 
     return (
@@ -31,20 +42,28 @@ function Post({ userName, caption, imageUrl, postId }) {
        
             <h4 className="post-text"><strong>{userName}:</strong> {caption}</h4>
 
+            <div className="post-comments">
+                {comments.map((comment) => {
+                  return  <p>
+                        <strong>{comment.username}</strong> {comment.text}
+                    </p>
+                })}
+            </div>
+
+
             <form className="post-comment-box">
                 <input className="post-input"
                         type="text"
                         placeholder="Add comment.."
                         value={comment}
                         onChange={(e) => setComment(e.target.value)}
-                        onClick={postComment}
                         />
                         
                         <button 
                         className="post-button"
                         disabled={!comment}
                         type="submit"
-                        onChange={(e) => setComment(e.target.value)}
+                        onClick={postComment}
                         >
                             Post
                         </button>
