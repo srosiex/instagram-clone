@@ -43,6 +43,7 @@ function App() {
   const [userName, setUserName] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+  const [openSignIn, setOpenSignIn] = useState(false)
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
@@ -84,6 +85,11 @@ function App() {
       }).catch((error)=> alert(error.message))
     }
 
+    const signIn = (event) => {
+      event.preventDefault()
+      
+    }
+
 
   return (
 
@@ -123,12 +129,47 @@ function App() {
        </div>
        </Modal>
 
+       <Modal
+        open={openSignIn}
+        onClose={()=> setOpenSignIn(false)}
+      >
+        <div style={modalStyle} className={classes.paper}>
+          <form className="app-signup">
+          <center>        
+              <img className="app__headerImage" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo-2x.png/1b47f9d0e595.png" alt="header" />
+          </center>
+              
+                <Input
+                  placeholder="email"
+                  type="text"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <Input
+                  placeholder="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <Button type="submit" onClick={signIn}>Log In</Button> 
+          </form>
+       </div>
+       </Modal>
+
 
       <div className="app__header">
         <img className="app__headerImage" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo-2x.png/1b47f9d0e595.png" alt="header" />
       </div>
 
-      <Button onClick={() => setOpen(true)}>Sign Up</Button>
+    { user ? (
+       <Button onClick={() => auth.signOut()}>Logout</Button>
+ 
+    ): (
+      <div className="login-container">
+      <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
+      <Button onClick={() => setOpen(true)}>Sign Up</Button> 
+    </div>
+    )}
 
       {
         posts.map(({id, post}) => (
