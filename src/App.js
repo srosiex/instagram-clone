@@ -7,6 +7,7 @@ import Modal from '@material-ui/core/Modal'
 import { Button, Input } from '@material-ui/core'
 import ImageUpload from './ImageUpload';
 
+
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -41,7 +42,7 @@ function App() {
 
   ])
   const [email, setEmail] = useState('')
-  const [userName, setUserName] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [openSignIn, setOpenSignIn] = useState(false)
@@ -62,7 +63,7 @@ function App() {
       // perform some cleanup actions
       unsubscribe();
     }
-  }, [user, userName]);
+  }, [user, username]);
 
   //useEffect runs a piece of code based ona specific condition
   //runs everytime the variable changes
@@ -81,7 +82,7 @@ function App() {
       event.preventDefault()
       auth.createUserWithEmailAndPassword(email, password).then((authUser) => {
         authUser.user.updateProfile({
-          displayName: userName
+          displayName: username
         })
       }).catch((error)=> alert(error.message))
 
@@ -112,8 +113,8 @@ function App() {
                 <Input
                   placeholder="username"
                   type="text"
-                  value={userName}
-                  onChange={(e) => setUserName(e.target.value)}
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                 />
               
                 <Input
@@ -179,16 +180,15 @@ function App() {
      <div className="app-posts">
      {
         posts.map(({id, post}) => (
-          <Post key={id} postId={id} user={user} userName={post.userName} caption={post.caption} imageUrl={post.imageUrl} />
+          <Post key={id} user={user} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
         ))
       }
-
-         
        </div> 
 
 
+
       { user?.displayName ? (
-         <ImageUpload userName={user.displayName} />
+         <ImageUpload username={user.displayName} />
 
       ): (
         <h3>Please login to upload</h3>
