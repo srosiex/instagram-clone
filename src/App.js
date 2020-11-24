@@ -114,6 +114,7 @@ function App() {
                   placeholder="username"
                   type="text"
                   value={username}
+                  required
                   onChange={(e) => setUsername(e.target.value)}
                 />
               
@@ -180,7 +181,7 @@ function App() {
      <div className="app-posts">
      {
         posts.map(({id, post}) => (
-          <Post key={id} user={user} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
+          <Post key={id} postId={id} user={user} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
         ))
       }
        </div> 
