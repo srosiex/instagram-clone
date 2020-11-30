@@ -82,11 +82,12 @@ function App() {
       event.preventDefault()
       auth.createUserWithEmailAndPassword(email, password).then((authUser) => {
         authUser.user.updateProfile({
-          displayName: username
+          displayName: username,
         })
       }).catch((error)=> alert(error.message))
 
       setOpen(false)
+
     }
 
     const signIn = (event) => {
@@ -100,7 +101,7 @@ function App() {
   return (
     
     <div className="app">
-
+    <div className="signup-div">
     <Modal
         open={open}
         onClose={()=> setOpen(false)}
@@ -134,6 +135,7 @@ function App() {
           </form>
        </div>
        </Modal>
+       </div>
 
        <Modal
         open={openSignIn}
@@ -144,7 +146,6 @@ function App() {
           <center>        
               <img className="app__headerImage" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo-2x.png/1b47f9d0e595.png" alt="header" />
           </center>
-              
                 <Input
                   placeholder="email"
                   type="text"

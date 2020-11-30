@@ -26,7 +26,7 @@ function Post({ user, username, caption, imageUrl, postId }) {
         db.collection("posts").doc(postId).collection("comments").add({
             text: comment,
             username: user.displayName,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp();
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
         })
         setComment('');
     }

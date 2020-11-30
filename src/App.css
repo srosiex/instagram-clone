@@ -26,6 +26,10 @@
   display: flex;
   flex-direction: column;
 }
+.signup-div{
+  display: flex;
+  flex-direction: column;
+}
 
 .app-posts{
   padding: 20px;
